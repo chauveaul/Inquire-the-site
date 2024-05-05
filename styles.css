@@ -93,6 +93,11 @@ nav {
     background: transparent;
     display: block;
     width: 120rem;
+    font-size: 2rem;
+}
+
+.user-input::placeholder {
+    color: #555;
 }
 
 .user-input:focus {
@@ -114,11 +119,13 @@ nav {
 }
 
 .ai-pfp {
+    opacity: 60%;
     width: 4.8rem;
     border-radius: 50%;
 }
 
 .user-pfp {
+    opacity: 75%;
     width: 4.8rem;
     height: 4.8rem;
     border-radius: 50%;
