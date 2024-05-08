@@ -34,6 +34,10 @@ function createNewUserMessage(message) {
   </div>`;
 
     messageHistory.insertAdjacentHTML("beforeend", userHtml);
+    messageHistory.scrollTop = messageHistory.scrollHeight;
+
+    console.log("Hi from the front end");
+    getAIResponse(message);
   }
 }
 
@@ -53,6 +57,17 @@ function createAIMessage(message) {
 }
 
 createAIMessage("How can I help you today?");
+
+function getAIResponse(userInput) {
+  fetch("/api/openai", {
+    method: "post",
+    body: JSON.stringify({
+      userInput: userInput,
+    }),
+  })
+    // .then((response) => response.json())
+    .then((aiOutput) => console.log(aiOutput));
+}
 
 fetch("/api/users")
   .then((response) => response.json())
