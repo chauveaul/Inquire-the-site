@@ -11,9 +11,11 @@ app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname, "..", "index.html"));
 });
 
+//Will grab link for crawler and return json with all links??
+app.post("/api/crawler", async (req, res) => {});
+
 app.post("/api/ai", async (req, res) => {
   const userMessage = req.body.userMessage;
-
   try {
     if (userMessage == null) {
       throw new Error("No prompt was provided.");

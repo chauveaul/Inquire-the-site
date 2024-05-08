@@ -5,7 +5,10 @@ const submitBtn = document.querySelector(".submit-btn");
 
 const messageHistory = document.querySelector(".message-history");
 
-console.log("Test from new javascript file");
+const changeLink = document.querySelector(".change-link");
+const linkPopUp = document.querySelector(".popup");
+const bgPopUp = document.querySelector(".background");
+const btnChangeLink = document.querySelector(".btn--input");
 
 messageHistory.innerHTML = "";
 
@@ -21,23 +24,55 @@ submitBtn.addEventListener("click", function () {
   userInput.value = "";
 });
 
-function createNewUserMessage(message) {
-  if (message !== "") {
+changeLink.addEventListener("click", function () {
+  linkPopUp.classList.add("active");
+  bgPopUp.classList.add("active");
+});
+
+bgPopUp.addEventListener("click", function () {
+  linkPopUp.classList.remove("active");
+  bgPopUp.classList.remove("active");
+});
+
+document.onkeydown = function (event) {
+  if (event.key === "Escape") {
+    linkPopUp.classList.remove("active");
+    bgPopUp.classList.remove("active");
+  }
+};
+
+btnChangeLink.addEventListener("click", function () {
+  //Send new link to crawler
+  linkPopUp.classList.remove("active");
+  bgPopUp.classList.remove("active");
+});
+
+function createNewUserMessage(userMessage) {
+  if (userMessage !== "") {
     const userHtml = `<div class="message-box user-message-box">
     <img
       class="user-pfp"
       src="img/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg"
     />
     <p class="message user-message">
-    ${message}
+    ${userMessage}
     </p>
   </div>`;
 
     messageHistory.insertAdjacentHTML("beforeend", userHtml);
     messageHistory.scrollTop = messageHistory.scrollHeight;
 
-    console.log("Hi from the front end");
-    getAIResponse(message);
+    fetch("/api/ai", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userMessage: userMessage,
+      }),
+    })
+      .then((response) => response.json())
+      .then((aiOutput) => createAIMessage(aiOutput.message));
   }
 }
 
@@ -58,17 +93,4 @@ function createAIMessage(message) {
 
 createAIMessage("How can I help you today?");
 
-function getAIResponse(userInput) {
-  fetch("/api/openai", {
-    method: "post",
-    body: JSON.stringify({
-      userInput: userInput,
-    }),
-  })
-    // .then((response) => response.json())
-    .then((aiOutput) => console.log(aiOutput));
-}
-
-fetch("/api/users")
-  .then((response) => response.json())
-  .then((users) => console.log(users));
+function getAIResponse(userInput) {}

@@ -8,7 +8,6 @@ const openai = new OpenAI({
 });
 
 async function main(userInput, findKeyword) {
-  console.log("Hi from the module");
   const completion = await openai.chat.completions.create({
     messages: [
       {
