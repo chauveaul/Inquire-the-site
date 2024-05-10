@@ -89,6 +89,7 @@ function createAIMessage(message) {
     </div>`;
 
   messageHistory.insertAdjacentHTML("beforeend", aiHtml);
+  messageHistory.scrollTop = messageHistory.scrollHeight;
 }
 
 createAIMessage("How can I help you today?");

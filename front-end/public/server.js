@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const ai = require("./ai.js");
+const crawler = require("./crawler.js");
 
 const app = express();
 
@@ -11,9 +12,6 @@ app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname, "..", "index.html"));
 });
 
-//Will grab link for crawler and return json with all links??
-app.post("/api/crawler", async (req, res) => {});
-
 app.post("/api/ai", async (req, res) => {
   const userMessage = req.body.userMessage;
   try {
@@ -22,6 +20,13 @@ app.post("/api/ai", async (req, res) => {
     }
 
     const response = await ai.main(userMessage, true);
+
+    const link = await crawler.findURL(
+      req.body.baseUrl,
+      req.body.baseUrl,
+      response,
+    );
+
     return res.status(200).json({
       success: true,
       message: response,
