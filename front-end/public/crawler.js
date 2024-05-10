@@ -1,3 +1,8 @@
+"use strict";
+
+//Add checks to avoid navigating to files to improve performance
+//I believe this will be done by adding the checks in grabUrls before adding to the set
+
 const cheerio = require("cheerio");
 
 async function findURL(baseUrl, currUrl, keyword, visistedUrls = new Set()) {

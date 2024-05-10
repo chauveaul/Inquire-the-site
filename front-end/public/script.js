@@ -9,6 +9,9 @@ const changeLink = document.querySelector(".change-link");
 const linkPopUp = document.querySelector(".popup");
 const bgPopUp = document.querySelector(".background");
 const btnChangeLink = document.querySelector(".btn--input");
+const userLink = document.querySelector(".input-link");
+
+let link = "";
 
 messageHistory.innerHTML = "";
 
@@ -42,9 +45,16 @@ document.onkeydown = function (event) {
 };
 
 btnChangeLink.addEventListener("click", function () {
-  //Send new link to crawler
+  link = userLink.value;
   linkPopUp.classList.remove("active");
   bgPopUp.classList.remove("active");
+});
+
+userLink.addEventListener("keypress", function (e) {
+  if (e.code === "Enter") {
+    e.preventDefault();
+    btnChangeLink.click();
+  }
 });
 
 function createNewUserMessage(userMessage) {
@@ -62,17 +72,25 @@ function createNewUserMessage(userMessage) {
     messageHistory.insertAdjacentHTML("beforeend", userHtml);
     messageHistory.scrollTop = messageHistory.scrollHeight;
 
-    fetch("/api/ai", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userMessage: userMessage,
-      }),
-    })
-      .then((response) => response.json())
-      .then((aiOutput) => createAIMessage(aiOutput.message));
+    if (link !== "") {
+      console.log("Sending api request");
+      fetch("/api/ai", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userMessage: userMessage,
+          baseUrl: link,
+        }),
+      })
+        .then((response) => response.json())
+        .then((aiOutput) => createAIMessage(aiOutput.message));
+    } else {
+      createAIMessage(
+        "You did not provide any link. Please change the link by clicking the change link button.",
+      );
+    }
   }
 }
 

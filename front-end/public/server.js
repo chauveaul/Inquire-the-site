@@ -1,7 +1,10 @@
+"use strict";
+
 const express = require("express");
 const path = require("path");
 const ai = require("./ai.js");
 const crawler = require("./crawler.js");
+const scraper = require("./scraper.js");
 
 const app = express();
 
@@ -12,53 +15,39 @@ app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname, "..", "index.html"));
 });
 
+//Make api endpoints for crawler and scraper and separate api calls in variables.
 app.post("/api/ai", async (req, res) => {
+  console.log("api request");
   const userMessage = req.body.userMessage;
   try {
     if (userMessage == null) {
       throw new Error("No prompt was provided.");
     }
 
-    const response = await ai.main(userMessage, true);
+    let aiResponse = await ai.main(userMessage);
+    console.log(`Keyword: ${aiResponse}`);
 
     const link = await crawler.findURL(
       req.body.baseUrl,
       req.body.baseUrl,
-      response,
+      aiResponse,
     );
+
+    console.log(`Link: ${link}`);
+
+    const htmlTextContent = await scraper.htmlTextContents(link);
+
+    aiResponse = await ai.main(userMessage, htmlTextContent);
+
+    console.log(`AI Reponse: ${aiResponse}`);
 
     return res.status(200).json({
       success: true,
-      message: response,
+      message: aiResponse,
     });
   } catch (error) {
     console.log(error.message);
   }
-});
-
-// app.post("/api/openai", (req, res) => {
-//   console.log("Hi from the backend");
-//   const userInput = req.body.userInput;
-//   const aiOutput = main(userInput, true);
-//   res.json(aiOutput);
-// });
-
-app.get("/api/users", (req, res) => {
-  const users = [
-    {
-      id: "123",
-      name: "Shaun",
-    },
-    {
-      id: "234",
-      name: "Bob",
-    },
-    {
-      id: "345",
-      name: "Sue",
-    },
-  ];
-  res.json(users);
 });
 
 app.listen(3000, function () {
