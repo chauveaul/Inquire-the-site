@@ -5,12 +5,24 @@
 
 const cheerio = require("cheerio");
 
-async function findURL(baseUrl, currUrl, keyword, visistedUrls = new Set()) {
+async function findURL(
+  baseUrl,
+  currUrl,
+  keyword,
+  visistedUrls = new Set(),
+  startTime = Date.now() / 1000,
+  currTime = Date.now() / 1000,
+) {
   let link = "";
-  if (baseUrl.endsWith("/")) baseUrl = baseUrl.slice(0, baseUrl.length - 1);
-  if (currUrl.endsWith("/")) currUrl = currUrl.slice(0, currUrl.length - 1);
+  if (!baseUrl.endsWith("/")) baseUrl += "/";
+  if (!currUrl.endsWith("/")) currUrl += "/";
   if (visistedUrls.has(currUrl)) return link;
   visistedUrls.add(currUrl);
+
+  console.log(`Time elapsed: ${currTime - startTime}`);
+  console.log(`Currently visiting: ${currUrl}`);
+
+  if (currTime - startTime >= 10) link = "DNE";
 
   try {
     const response = await fetch(currUrl);
@@ -33,8 +45,10 @@ async function findURL(baseUrl, currUrl, keyword, visistedUrls = new Set()) {
 
     const scrapedUrls = grabUrls(baseUrl, html);
     for (const url of scrapedUrls) {
-      if (!visistedUrls.has(url))
-        link = await findURL(baseUrl, url, keyword, visistedUrls);
+      if (!visistedUrls.has(url)) {
+        console.log(`Visited urls: ${visistedUrls.size}`);
+        link = await findURL(baseUrl, url, keyword, visistedUrls, startTime);
+      }
       if (link !== "") return link;
     }
   } catch (error) {
@@ -70,7 +84,10 @@ function grabUrls(baseUrl, html) {
         return;
       }
 
-      if (url.startsWith("#")) {
+      if (
+        url.startsWith("#") ||
+        url.slice(url.lastIndexOf("/")).includes(".")
+      ) {
         return;
       }
       urls.add(url);

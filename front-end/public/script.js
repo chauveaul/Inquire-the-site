@@ -6,6 +6,7 @@ const submitBtn = document.querySelector(".submit-btn");
 const messageHistory = document.querySelector(".message-history");
 
 const changeLink = document.querySelector(".change-link");
+const newChat = document.querySelector(".new-chat");
 const linkPopUp = document.querySelector(".popup");
 const bgPopUp = document.querySelector(".background");
 const btnChangeLink = document.querySelector(".btn--input");
@@ -55,6 +56,10 @@ userLink.addEventListener("keypress", function (e) {
     e.preventDefault();
     btnChangeLink.click();
   }
+});
+
+newChat.addEventListener("click", function () {
+  window.location.reload();
 });
 
 function createNewUserMessage(userMessage) {

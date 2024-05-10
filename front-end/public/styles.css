@@ -147,6 +147,12 @@ nav {
 
 .message-history {
     overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.message-history::-webkit-scrollbar {
+    display: none;
 }
 
 .popup {

@@ -24,22 +24,28 @@ app.post("/api/ai", async (req, res) => {
       throw new Error("No prompt was provided.");
     }
 
-    let aiResponse = await ai.main(userMessage);
-    console.log(`Keyword: ${aiResponse}`);
+    const aiResponseKeyword = await ai.main(userMessage);
+    console.log(`Keyword: ${aiResponseKeyword}`);
 
     const link = await crawler.findURL(
       req.body.baseUrl,
       req.body.baseUrl,
-      aiResponse,
+      aiResponseKeyword,
     );
 
     console.log(`Link: ${link}`);
 
-    const htmlTextContent = await scraper.htmlTextContents(link);
+    let aiResponse = aiResponseKeyword;
 
-    aiResponse = await ai.main(userMessage, htmlTextContent);
+    if (link !== "DNE") {
+      const htmlTextContent = await scraper.htmlTextContents(link);
+      aiResponse = await ai.main(userMessage, htmlTextContent);
+      console.log(`AI Reponse: ${aiResponse}`);
+    }
 
-    console.log(`AI Reponse: ${aiResponse}`);
+    if (aiResponse === aiResponseKeyword)
+      aiResponse =
+        "Sorry, I was not able to find a match. Maybe try again or switch up the url.";
 
     return res.status(200).json({
       success: true,
