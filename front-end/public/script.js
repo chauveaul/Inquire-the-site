@@ -104,7 +104,7 @@ function createAIMessage(message) {
     <div class="message-box ai-message-box">
         <img
             class="ai-pfp"
-            src="img/chatgpt-green-circular-logo-22057.svg"
+            src="img/image.svg"
         />
         <p class="message ai-message">
         ${message}

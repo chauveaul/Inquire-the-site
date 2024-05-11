@@ -16,9 +16,11 @@
         <link rel="stylesheet" href="styles.css" />
     </head>
     <body>
+        <div class="blob"></div>
+        <div class="blur"></div>
         <nav>
             <!-- Logo -->
-            <img src="img/OpenAI_Logo.svg.png" class="logo" />
+            <img src="img/InquireTheSiteLogo.png" class="logo" />
             <div class="links">
                 <!-- To center the links -->
                 <a href="#" class="nav-link new-chat">New Chat</a>
@@ -36,6 +38,7 @@
                 />
             </div>
         </nav>
+
         <main>
             <div class="popup">
                 <div class="container--popup">
@@ -46,6 +49,7 @@
                             class="input-link"
                             name="input-link"
                             placeholder="ex. https://www.mcgill.ca/"
+                            autocomplete="off"
                         />
                     </div>
                     <button class="btn--input">Change Link</button>
@@ -72,10 +76,7 @@
                         </p>
                     </div>
                     <div class="message-box ai-message-box">
-                        <img
-                            class="ai-pfp"
-                            src="img/chatgpt-green-circular-logo-22057.svg"
-                        />
+                        <img class="ai-pfp" src="img/image.png" />
                         <p class="message ai-message">
                             Lorem ipsum dolor sit amet, consectetur adipiscing
                             elit, sed do eiusmod tempor incididunt ut labore et
@@ -109,5 +110,6 @@
             src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
         ></script>
         <script src="/script.js"></script>
+        <script src="/bgeffect.js"></script>
     </body>
 </html>
