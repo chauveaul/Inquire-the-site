@@ -38,9 +38,11 @@ async function findURL(
 
     const $ = cheerio.load(html);
     const title = $("head").find("title").text();
-    if (title.toLowerCase().includes(keyword)) {
-      link = currUrl;
-      return link;
+    for (const word of keyword) {
+      if (title.toLowerCase().includes(word)) {
+        link = currUrl;
+        return link;
+      }
     }
 
     const scrapedUrls = grabUrls(baseUrl, html);

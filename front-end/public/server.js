@@ -24,7 +24,9 @@ app.post("/api/ai", async (req, res) => {
       throw new Error("No prompt was provided.");
     }
 
-    const aiResponseKeyword = await ai.main(userMessage);
+    let aiResponseKeyword = await ai.main(userMessage);
+    aiResponseKeyword = aiResponseKeyword.split(" ");
+    console.log(aiResponseKeyword);
     console.log(`Keyword: ${aiResponseKeyword}`);
 
     const link = await crawler.findURL(

@@ -106,9 +106,11 @@ function createAIMessage(message) {
             class="ai-pfp"
             src="img/image.svg"
         />
+        <div>
         <p class="message ai-message">
         ${message}
         </p>
+        </div>
     </div>`;
 
   messageHistory.insertAdjacentHTML("beforeend", aiHtml);
