@@ -42,15 +42,27 @@
         <main>
             <div class="popup">
                 <div class="container--popup">
-                    <div class="input-box">
-                        <label for="input-link">Input link</label>
-                        <input
-                            type="text"
-                            class="input-link"
-                            name="input-link"
-                            placeholder="ex. https://www.mcgill.ca/"
-                            autocomplete="off"
-                        />
+                    <div class="flex">
+                        <div class="input-box input-box-link">
+                            <label for="input-link">Input link</label>
+                            <input
+                                type="text"
+                                class="input-link"
+                                name="input-link"
+                                placeholder="ex. https://www.mcgill.ca/"
+                                autocomplete="off"
+                            />
+                        </div>
+                        <div class="input-box input-box-timer">
+                            <label for="input-timer">Max run time</label>
+                            <input
+                                type="number"
+                                class="input-timer"
+                                name="input-timer"
+                                placeholder="10"
+                                autocomplete="off"
+                            />
+                        </div>
                     </div>
                     <button class="btn--input">Change Link</button>
                 </div>

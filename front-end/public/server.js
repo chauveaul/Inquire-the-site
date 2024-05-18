@@ -33,6 +33,7 @@ app.post("/api/ai", async (req, res) => {
       req.body.baseUrl,
       req.body.baseUrl,
       aiResponseKeyword,
+      req.body.timer,
     );
 
     console.log(`Link: ${link}`);

@@ -12,7 +12,10 @@ const bgPopUp = document.querySelector(".background");
 const btnChangeLink = document.querySelector(".btn--input");
 const userLink = document.querySelector(".input-link");
 
+const timerEl = document.querySelector(".input-timer");
+
 let link = "";
+let timer = 10;
 
 messageHistory.innerHTML = "";
 
@@ -36,12 +39,26 @@ changeLink.addEventListener("click", function () {
 bgPopUp.addEventListener("click", function () {
   linkPopUp.classList.remove("active");
   bgPopUp.classList.remove("active");
+
+  if (timerEl.value) {
+    timer = timerEl.value;
+    console.log(timer);
+  } else {
+    timer = 10;
+  }
 });
 
 document.onkeydown = function (event) {
   if (event.key === "Escape") {
     linkPopUp.classList.remove("active");
     bgPopUp.classList.remove("active");
+
+    if (timerEl.value) {
+      timer = timerEl.value;
+      console.log(timer);
+    } else {
+      timer = 10;
+    }
   }
 };
 
@@ -49,6 +66,13 @@ btnChangeLink.addEventListener("click", function () {
   link = userLink.value;
   linkPopUp.classList.remove("active");
   bgPopUp.classList.remove("active");
+
+  if (timerEl.value) {
+    timer = timerEl.value;
+    console.log(timer);
+  } else {
+    timer = 10;
+  }
 });
 
 userLink.addEventListener("keypress", function (e) {
@@ -87,6 +111,7 @@ function createNewUserMessage(userMessage) {
         body: JSON.stringify({
           userMessage: userMessage,
           baseUrl: link,
+          timer: timer,
         }),
       })
         .then((response) => response.json())

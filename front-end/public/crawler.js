@@ -9,6 +9,7 @@ async function findURL(
   baseUrl,
   currUrl,
   keyword,
+  timer = 10,
   visistedUrls = new Set(),
   startTime = Date.now() / 1000,
   currTime = Date.now() / 1000,
@@ -19,10 +20,12 @@ async function findURL(
   if (visistedUrls.has(currUrl)) return link;
   visistedUrls.add(currUrl);
 
+  console.log(`Timer: ${timer}`);
+
   console.log(`Time elapsed: ${currTime - startTime}`);
   console.log(`Currently visiting: ${currUrl}`);
 
-  if (currTime - startTime >= 10) link = "DNE";
+  if (currTime - startTime >= timer) link = "DNE";
 
   try {
     const response = await fetch(currUrl);
@@ -49,7 +52,14 @@ async function findURL(
     for (const url of scrapedUrls) {
       if (!visistedUrls.has(url)) {
         console.log(`Visited urls: ${visistedUrls.size}`);
-        link = await findURL(baseUrl, url, keyword, visistedUrls, startTime);
+        link = await findURL(
+          baseUrl,
+          url,
+          keyword,
+          timer,
+          visistedUrls,
+          startTime,
+        );
       }
       if (link !== "") return link;
     }

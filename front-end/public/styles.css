@@ -243,7 +243,10 @@ div {
 .input-box {
     display: flex;
     flex-direction: column;
-    margin: 0 4rem;
+}
+
+.input-box-link {
+    margin-left: 4rem;
 }
 
 .input-box label {
@@ -263,6 +266,10 @@ div {
 
 .input-box input::placeholder {
     color: #999;
+}
+
+.input-link {
+    width: 30rem;
 }
 
 .btn--input {
@@ -295,6 +302,25 @@ div {
     background-color: rgba(100, 100, 100, 0.2);
     z-index: 1;
     backdrop-filter: blur(5px);
+}
+
+.flex {
+    display: flex;
+    gap: 2rem;
+}
+
+.input-timer {
+    width: 8rem;
+}
+
+.input-timer::-webkit-outer-spin-button,
+.input-timer::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.input-timer {
+    -moz-appearance: textfield;
 }
 
 .blob {
