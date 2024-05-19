@@ -102,8 +102,15 @@ function createNewUserMessage(userMessage) {
     messageHistory.scrollTop = messageHistory.scrollHeight;
 
     if (link !== "") {
+      console.log(
+        JSON.stringify({
+          userMessage: userMessage,
+          baseUrl: link,
+          timer: timer,
+        }),
+      );
       console.log("Sending api request");
-      fetch("/api/ai", {
+      fetch("https://us-central1-inquire-the-site.cloudfunctions.net/ai", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
