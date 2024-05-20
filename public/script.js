@@ -110,7 +110,8 @@ function createNewUserMessage(userMessage) {
         }),
       );
       console.log("Sending api request");
-      fetch("https://us-central1-inquire-the-site.cloudfunctions.net/ai", {
+      // fetch("http://127.0.0.1:5001/inquire-the-site/us-central1/ai", {
+      fetch("https://ai-6etpq3xqgq-uc.a.run.app", {
         method: "post",
         headers: {
           "Content-Type": "application/json",

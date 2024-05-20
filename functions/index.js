@@ -1,11 +1,10 @@
 const { onRequest } = require("firebase-functions/v2/https");
 const functions = require("firebase-functions");
 const firebase = require("firebase-admin");
-const { defineSecret } = require("firebase-functions/params");
+const { defineSecret, defineString } = require("firebase-functions/params");
 const logger = require("firebase-functions/logger");
 const engines = require("consolidate");
 const path = require("path");
-const cors = require("cors");
 
 const ai = require("./ai.js");
 const crawler = require("./crawler.js");
@@ -25,57 +24,60 @@ const express = require("express");
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use((req, res, next) => {
+  res.append("Access-Control-Allow-Origin", ["*"]);
+  res.append("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+  res.append("Access-Control-Allow-Headers", "Content-Type");
+  next();
+});
 
-const openaiKey = defineSecret("OPENAI_API_KEY");
+const openaiKey = defineString("OPENAI_API_KEY");
 
-exports.ai = functions
-  .runWith({ secrets: [openaiKey.name] })
-  .https.onRequest({ cors: ["*"] }, async (req, res) => {
-    cors(async (req, res) => {
-      console.log(req.body);
-      const userMessage = req.body.userMessage;
-      try {
-        if (userMessage == null) {
-          throw new Error("No prompt was provided.");
-        }
-
-        let aiResponseKeyword = await ai.main(userMessage);
-        aiResponseKeyword = aiResponseKeyword.split(" ");
-        console.log(aiResponseKeyword);
-        console.log(`Keyword: ${aiResponseKeyword}`);
-
-        const link = await crawler.findURL(
-          req.body.baseUrl,
-          req.body.baseUrl,
-          aiResponseKeyword,
-          req.body.timer,
-        );
-
-        console.log(`Link: ${link}`);
-
-        let aiResponse = aiResponseKeyword;
-
-        if (link !== "DNE") {
-          const htmlTextContent = await scraper.htmlTextContents(link);
-          aiResponse = await ai.main(userMessage, htmlTextContent);
-          console.log(`AI Reponse: ${aiResponse}`);
-        }
-
-        if (aiResponse === aiResponseKeyword)
-          aiResponse =
-            "Sorry, I was not able to find a match. Maybe try again or switch up the url.";
-
-        return res.status(200).json({
-          success: true,
-          message: aiResponse,
-        });
-      } catch (error) {
-        console.log(error.message);
+exports.ai = onRequest(
+  { OPENAI_API_KEY: openaiKey, cors: true },
+  async (req, res) => {
+    console.log(req.body);
+    const userMessage = req.body.userMessage;
+    try {
+      if (userMessage == null) {
+        throw new Error("No prompt was provided.");
       }
-    });
-  });
 
+      let aiResponseKeyword = await ai.main(userMessage);
+      aiResponseKeyword = aiResponseKeyword.split(" ");
+      console.log(aiResponseKeyword);
+      console.log(`Keyword: ${aiResponseKeyword}`);
+
+      const link = await crawler.findURL(
+        req.body.baseUrl,
+        req.body.baseUrl,
+        aiResponseKeyword,
+        req.body.timer,
+      );
+
+      console.log(`Link: ${link}`);
+
+      let aiResponse = aiResponseKeyword;
+
+      if (link !== "DNE") {
+        const htmlTextContent = await scraper.htmlTextContents(link);
+        aiResponse = await ai.main(userMessage, htmlTextContent);
+        console.log(`AI Reponse: ${aiResponse}`);
+      }
+
+      if (aiResponse === aiResponseKeyword)
+        aiResponse =
+          "Sorry, I was not able to find a match. Maybe try again or switch up the url.";
+
+      return res.status(200).json({
+        success: true,
+        message: aiResponse,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
+);
 // app.post("/api/ai", async (req, res) => {
 //   console.log("api request");
 //   const userMessage = req.body.userMessage;
@@ -84,7 +86,6 @@ exports.ai = functions
 //       throw new Error("No prompt was provided.");
 //     }
 
-//     let aiResponseKeyword = await ai.main(userMessage);
 //     aiResponseKeyword = aiResponseKeyword.split(" ");
 //     console.log(aiResponseKeyword);
 //     console.log(`Keyword: ${aiResponseKeyword}`);
