@@ -1,17 +1,12 @@
 const { onRequest } = require("firebase-functions/v2/https");
-const functions = require("firebase-functions");
-const firebase = require("firebase-admin");
-const { getAuth } = require("firebase-admin/auth");
-const { defineSecret, defineString } = require("firebase-functions/params");
-const logger = require("firebase-functions/logger");
-const engines = require("consolidate");
-const path = require("path");
+const { initializeApp } = require("firebase-admin/app");
+const { defineString } = require("firebase-functions/params");
 
 const ai = require("./ai.js");
 const crawler = require("./crawler.js");
 const scraper = require("./scraper.js");
 
-const firebaseApp = firebase.initializeApp({
+const app = initializeApp({
   apiKey: "AIzaSyAjgCealkLcvoWS7GTJGYNLSgFPSg3F9wI",
   authDomain: "inquire-the-site.firebaseapp.com",
   projectId: "inquire-the-site",
@@ -23,9 +18,9 @@ const firebaseApp = firebase.initializeApp({
 
 const express = require("express");
 
-const app = express();
-app.use(express.json());
-app.use((req, res, next) => {
+const expressApp = express();
+expressApp.use(express.json());
+expressApp.use((req, res, next) => {
   res.append("Access-Control-Allow-Origin", ["*"]);
   res.append("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
   res.append("Access-Control-Allow-Headers", "Content-Type");
@@ -80,4 +75,26 @@ exports.ai = onRequest(
   },
 );
 
-exports.app = onRequest(app);
+// exports.authFunc = onRequest({ cors: true }, async (req, res) => {
+//   const provider = new GoogleAuthProvider();
+//   await signInWithPopup(auth, provider)
+//     .then((result) => {
+//       const credential = GoogleAuthProvider.credentialFromResult(result);
+//       const token = credential.accessToken;
+//       const user = result.user;
+//     })
+//     .then(() => {
+//       return res.status(200).json({
+//         credential,
+//         token,
+//         user,
+//         result,
+//       });
+//     })
+//     .catch((error) => {
+//       const errorCode = error.code;
+//       const errorMessage = error.message;
+//     });
+// });
+
+exports.app = onRequest(expressApp);

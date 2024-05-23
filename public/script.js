@@ -12,6 +12,9 @@ const bgPopUp = document.querySelector(".background");
 const btnChangeLink = document.querySelector(".btn--input");
 const userLink = document.querySelector(".input-link");
 
+const userPfp = document.querySelector(".nav-user-pfp");
+const signInWithGoogleBtn = document.querySelector(".google-signin");
+
 const timerEl = document.querySelector(".input-timer");
 
 let link = "";
@@ -39,6 +42,7 @@ changeLink.addEventListener("click", function () {
 bgPopUp.addEventListener("click", function () {
   linkPopUp.classList.remove("active");
   bgPopUp.classList.remove("active");
+  document.querySelector(".login-window").classList.remove("active");
 
   if (timerEl.value) {
     timer = timerEl.value;
@@ -52,6 +56,7 @@ document.onkeydown = function (event) {
   if (event.key === "Escape") {
     linkPopUp.classList.remove("active");
     bgPopUp.classList.remove("active");
+    document.querySelector(".login-window").classList.remove("active");
 
     if (timerEl.value) {
       timer = timerEl.value;
@@ -85,6 +90,17 @@ userLink.addEventListener("keypress", function (e) {
 newChat.addEventListener("click", function () {
   window.location.reload();
 });
+
+userPfp.addEventListener("click", function () {
+  document.querySelector(".login-window").classList.add("active");
+  document.querySelector(".background").classList.add("active");
+});
+
+// signInWithGoogleBtn.addEventListener("click", async function () {
+//   console.log("Button clicked");
+//   // await fetch("https://authfunc-6etpq3xqgq-uc.a.run.app");
+//   await fetch("http://127.0.0.1:5001/inquire-the-site/us-central1/authFunc");
+// });
 
 function createNewUserMessage(userMessage) {
   if (userMessage !== "") {
@@ -151,5 +167,3 @@ function createAIMessage(message) {
 }
 
 createAIMessage("How can I help you today?");
-
-function getAIResponse(userInput) {}

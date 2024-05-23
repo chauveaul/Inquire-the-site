@@ -33,6 +33,10 @@ nav {
     font-size: 1.6rem;
 }
 
+button:hover {
+    cursor: pointer;
+}
+
 .logo {
     max-width: 31.25rem;
     max-height: 8rem;
@@ -49,6 +53,10 @@ nav {
     border-radius: 50%;
     opacity: 80%;
     flex-basis: auto;
+}
+
+img.nav-user-pfp:hover {
+    cursor: pointer;
 }
 
 .links {
@@ -249,10 +257,19 @@ div {
     margin-left: 4rem;
 }
 
-.input-box label {
+.input-box {
     margin-bottom: 1.2rem;
     font-size: 1.4rem;
     color: #bbb;
+}
+
+.login-window button,
+.login-window input {
+    color: #bbb;
+}
+
+.login-window input::placeholder {
+    color: #999;
 }
 
 .input-box input {
@@ -376,12 +393,20 @@ div {
     padding: 1.2rem 1.6rem;
     border-radius: 12px;
     border: none;
+    background-color: #555;
+    box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.1);
 }
 
-.login-window button {
+.container--login button {
     padding: 1.2rem 1.6rem;
     border-radius: 12px;
     border: none;
+    background-color: #555;
+    box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.1);
+}
+
+.login-window {
+    color: #bbb;
 }
 
 .login-window a:link {
