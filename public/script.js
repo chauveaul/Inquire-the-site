@@ -13,9 +13,17 @@ const btnChangeLink = document.querySelector(".btn--input");
 const userLink = document.querySelector(".input-link");
 
 const userPfp = document.querySelector(".nav-user-pfp");
-const signInWithGoogleBtn = document.querySelector(".google-signin");
 
 const timerEl = document.querySelector(".input-timer");
+
+const selectSignIn = document.querySelector(".select-signin");
+const selectSignUp = document.querySelector(".select-signup");
+const loginHeader = document.querySelector(".login-header");
+const repeatPassword = document.querySelector(".repeat-password");
+
+const signUpForm = document.querySelector(".signup-form");
+const signInForm = document.querySelector(".signin-form");
+const loginWindow = document.querySelector(".login-window");
 
 let link = "";
 let timer = 10;
@@ -96,11 +104,25 @@ userPfp.addEventListener("click", function () {
   document.querySelector(".background").classList.add("active");
 });
 
-// signInWithGoogleBtn.addEventListener("click", async function () {
-//   console.log("Button clicked");
-//   // await fetch("https://authfunc-6etpq3xqgq-uc.a.run.app");
-//   await fetch("http://127.0.0.1:5001/inquire-the-site/us-central1/authFunc");
-// });
+selectSignIn.addEventListener("click", function () {
+  selectSignIn.classList.add("active");
+  selectSignUp.classList.remove("active");
+  signInForm.classList.remove("hidden");
+  signUpForm.classList.add("hidden");
+  loginHeader.innerHTML = "Login";
+  repeatPassword.classList.add("hidden");
+  loginWindow.style.height = "40rem";
+});
+
+selectSignUp.addEventListener("click", function () {
+  selectSignIn.classList.remove("active");
+  selectSignUp.classList.add("active");
+  signInForm.classList.add("hidden");
+  signUpForm.classList.remove("hidden");
+  loginHeader.innerHTML = "Sign Up";
+  repeatPassword.classList.remove("hidden");
+  loginWindow.style.height = "48rem";
+});
 
 function createNewUserMessage(userMessage) {
   if (userMessage !== "") {

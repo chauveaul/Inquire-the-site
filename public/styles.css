@@ -376,7 +376,7 @@ div {
     left: 50%;
     transform: translate(-50%, -60%);
     width: 50rem;
-    height: 48rem;
+    height: 40rem;
     background-color: rgba(100, 100, 100, 0.5);
     z-index: 9999;
     border-radius: 12px;
@@ -436,6 +436,44 @@ div {
     text-align: center;
     gap: 2rem;
     height: 20rem;
+}
+
+.hidden {
+    display: none;
+}
+
+.flex {
+    display: flex;
+}
+
+button.no-margin-right {
+    margin-right: 0;
+    border-radius: 16px 6px 6px 16px;
+}
+
+button.no-margin-left {
+    margin-left: 0;
+    border-radius: 6px 16px 16px 6px;
+}
+
+.no-flex-gap {
+    gap: 6px;
+}
+
+.center {
+    width: auto;
+    margin: 0 auto;
+}
+
+.select-signin,
+.select-signup {
+    width: 10rem;
+}
+
+.select-signin.active,
+.select-signup.active {
+    background-color: rgba(255, 255, 255, 0.5);
+    color: #555;
 }
 
 @keyframes rotate {

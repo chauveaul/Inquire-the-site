@@ -12,9 +12,24 @@ firebase.initializeApp({
 
 const auth = firebase.auth();
 
-const googleSignInBtn = document.querySelector(".google-signin");
-const provider = new firebase.auth.GoogleAuthProvider();
+// const googleSignInBtn = document.querySelector(".google-signin");
+// const provider = new firebase.auth.GoogleAuthProvider();
 
-googleSignInBtn.addEventListener("click", function () {
-  auth.signInWithPopup(provider);
+// googleSignInBtn.addEventListener("click", function () {
+//   auth.signInWithPopup(provider);
+// });
+
+auth.onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // https://firebase.google.com/docs/reference/js/auth.user
+    console.log(`Signed in as ${user.name}`);
+    const uid = user.uid;
+    console.log("Signing out");
+    auth.signOut().then(function () {
+      console.log("Signed out");
+    });
+  } else {
+    // User is signed out
+    // ...
+  }
 });
