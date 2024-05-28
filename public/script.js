@@ -12,18 +12,7 @@ const bgPopUp = document.querySelector(".background");
 const btnChangeLink = document.querySelector(".btn--input");
 const userLink = document.querySelector(".input-link");
 
-const userPfp = document.querySelector(".nav-user-pfp");
-
 const timerEl = document.querySelector(".input-timer");
-
-const selectSignIn = document.querySelector(".select-signin");
-const selectSignUp = document.querySelector(".select-signup");
-const loginHeader = document.querySelector(".login-header");
-const repeatPassword = document.querySelector(".repeat-password");
-
-const signUpForm = document.querySelector(".signup-form");
-const signInForm = document.querySelector(".signin-form");
-const loginWindow = document.querySelector(".login-window");
 
 let link = "";
 let timer = 10;
@@ -52,6 +41,8 @@ bgPopUp.addEventListener("click", function () {
   bgPopUp.classList.remove("active");
   document.querySelector(".login-window").classList.remove("active");
 
+  document.querySelector(".user-profile").classList.add("hidden");
+
   if (timerEl.value) {
     timer = timerEl.value;
     console.log(timer);
@@ -65,6 +56,8 @@ document.onkeydown = function (event) {
     linkPopUp.classList.remove("active");
     bgPopUp.classList.remove("active");
     document.querySelector(".login-window").classList.remove("active");
+
+    document.querySelector(".user-profile").classList.add("hidden");
 
     if (timerEl.value) {
       timer = timerEl.value;
@@ -97,31 +90,6 @@ userLink.addEventListener("keypress", function (e) {
 
 newChat.addEventListener("click", function () {
   window.location.reload();
-});
-
-userPfp.addEventListener("click", function () {
-  document.querySelector(".login-window").classList.add("active");
-  document.querySelector(".background").classList.add("active");
-});
-
-selectSignIn.addEventListener("click", function () {
-  selectSignIn.classList.add("active");
-  selectSignUp.classList.remove("active");
-  signInForm.classList.remove("hidden");
-  signUpForm.classList.add("hidden");
-  loginHeader.innerHTML = "Login";
-  repeatPassword.classList.add("hidden");
-  loginWindow.style.height = "40rem";
-});
-
-selectSignUp.addEventListener("click", function () {
-  selectSignIn.classList.remove("active");
-  selectSignUp.classList.add("active");
-  signInForm.classList.add("hidden");
-  signUpForm.classList.remove("hidden");
-  loginHeader.innerHTML = "Sign Up";
-  repeatPassword.classList.remove("hidden");
-  loginWindow.style.height = "48rem";
 });
 
 function createNewUserMessage(userMessage) {
