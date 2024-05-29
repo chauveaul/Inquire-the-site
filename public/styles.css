@@ -500,16 +500,12 @@ button.no-margin-left {
     align-items: center;
 }
 
-.flex-left button {
-    margin-top: 2rem;
-}
-
 .profile-pfp {
     width: 6.4rem;
     height: 6.4rem;
 
     margin: 0;
-    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 .flex-right {
@@ -543,6 +539,26 @@ button.no-margin-left {
 
     background-color: rgb(85, 85, 85);
     color: rgb(204, 204, 204);
+}
+
+.upload-img {
+    display: none;
+}
+
+.img-label {
+    text-align: center;
+    background-color: rgb(85, 85, 85);
+    color: rgb(204, 204, 204);
+    padding: 0.8rem 1.2rem;
+    border-radius: 12px;
+    font-size: 1.4rem;
+    width: 11rem;
+    margin-bottom: 0.6rem;
+}
+
+button.confirm-upload {
+    background-color: rgba(99, 230, 190, 0.6);
+    font-size: 1.4rem;
 }
 
 @keyframes rotate {
