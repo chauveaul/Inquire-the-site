@@ -83,11 +83,10 @@ signInSubmitButton.addEventListener("click", function (e) {
       signInPasswordField.value,
     )
     .then((userCredential) => {
-      console.log(user);
       user = userCredential.user;
-      console.log(user);
-      console.log(`Logged in as: ${user}`);
       bgPopUp.click();
+
+      changePfp(user);
 
       profileName.value = user.displayName;
       profileEmail.value = user.email;
@@ -170,3 +169,21 @@ signOutBtn.addEventListener("click", function (e) {
       console.log(error);
     });
 });
+
+function changePfp(user) {
+  const storage = firebase.storage();
+  const storageRef = storage.ref();
+  const pfpRef = storageRef.child(`${user.uid}/image.jpg`);
+
+  const navUserPfp = document.querySelector(".nav-user-pfp");
+  const profileUserPfp = document.querySelector(".profile-pfp");
+  const messageUserPfp = document.querySelectorAll(".user-pfp");
+
+  pfpRef.getDownloadURL().then((url) => {
+    navUserPfp.src = url;
+    profileUserPfp.src = url;
+    messageUserPfp.forEach(function (item) {
+      item.src = url;
+    });
+  });
+}

@@ -50,6 +50,7 @@ button:hover {
 .nav-user-pfp {
     margin: 1rem;
     height: 6rem;
+    width: 6rem;
     border-radius: 50%;
     opacity: 80%;
     flex-basis: auto;

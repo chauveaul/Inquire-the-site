@@ -92,12 +92,29 @@ newChat.addEventListener("click", function () {
   window.location.reload();
 });
 
-function createNewUserMessage(userMessage) {
+async function createNewUserMessage(userMessage) {
+  let storage;
+  let storageRef;
+  let pfpRef;
+  let imageUrl;
+  if (firebase.auth().currentUser) {
+    storage = firebase.storage();
+    storageRef = storage.ref();
+    pfpRef = storageRef.child(`${firebase.auth().currentUser.uid}/image.jpg`);
+
+    await pfpRef.getDownloadURL().then((url) => {
+      console.log(url);
+      imageUrl = `src="${url}"`;
+    });
+  }
+
   if (userMessage !== "") {
     const userHtml = `<div class="message-box user-message-box">
     <img
       class="user-pfp"
-      src="img/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg"
+      ${imageUrl ? imageUrl : 'src="img/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg"'}
+
+
     />
     <p class="message user-message">
     ${userMessage}
@@ -155,5 +172,7 @@ function createAIMessage(message) {
   messageHistory.insertAdjacentHTML("beforeend", aiHtml);
   messageHistory.scrollTop = messageHistory.scrollHeight;
 }
+
+function isAuth() {}
 
 createAIMessage("How can I help you today?");
