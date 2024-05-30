@@ -2,7 +2,7 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",
     "dotenv": "^16.4.5",
-    "firebase": "^10.12.1",
+    "firebase": "^10.12.2",
     "openai": "^4.47.1"
   }
 }

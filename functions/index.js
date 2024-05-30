@@ -75,26 +75,4 @@ exports.ai = onRequest(
   },
 );
 
-// exports.authFunc = onRequest({ cors: true }, async (req, res) => {
-//   const provider = new GoogleAuthProvider();
-//   await signInWithPopup(auth, provider)
-//     .then((result) => {
-//       const credential = GoogleAuthProvider.credentialFromResult(result);
-//       const token = credential.accessToken;
-//       const user = result.user;
-//     })
-//     .then(() => {
-//       return res.status(200).json({
-//         credential,
-//         token,
-//         user,
-//         result,
-//       });
-//     })
-//     .catch((error) => {
-//       const errorCode = error.code;
-//       const errorMessage = error.message;
-//     });
-// });
-
 exports.app = onRequest(expressApp);
