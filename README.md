@@ -11,11 +11,21 @@ To start making the best of Inquire the Site, head over to this [link](https://i
 ### Choose a base link
 This will let the application know where to start its search from. Grab the link of something that you want to know more about (ex. give the site of a university and ask for more information about their programs). After that, tell the program how long it can search for (default is 10 seconds) before terminating its search if it wasn't conclusive.
 
+![1](https://github.com/user-attachments/assets/24f6da59-db12-4659-b939-96a47f4e3b02)
+
+ ![Screenshot 2024-11-06 at 8 24 05 AM](https://github.com/user-attachments/assets/931a0828-b231-4979-a071-7be0f8dabb68)
+
 ### Ask a question
 Now that the base link is set, you can ask a question and let Inquire the Site do the rest. If no answer was found, you can either reformulate your question or increase the search time as mentioned above.
 
+![3](https://github.com/user-attachments/assets/49f3669e-b0d2-4d85-a4e2-ba6497768965)
+
 ### Change your profile picture
 Inquire the Site has an auth system and you can make an account to change the profile picture. To do so, head over to the top right corner of your screen and click on the account icon. Then, follow the registration steps and head back to the account icon every time you want to make modifications to your account.
+
+![4](https://github.com/user-attachments/assets/113bff16-da64-4d3c-835d-149c38128361)
+
+![6](https://github.com/user-attachments/assets/e6aeb2cb-4381-46ab-96b7-7926a6304a41)
 
 ## 🤨 How it was made
 
